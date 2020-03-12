@@ -1,5 +1,6 @@
 package edu.miracostacollege.cs134.wheretonext;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -48,14 +49,33 @@ public class MainActivity extends AppCompatActivity {
         // TODO:  Connect the list adapter with the list
         collegesListView = findViewById(R.id.collegeListView) ;
 
-        collegesListView.setAdapter(collegesListAdapter) ;
-
         // TODO:  Set the list view to use the list adapter
+        System.out.println("porque");
+        collegesListAdapter = new CollegeListAdapter(this, R.layout.college_list_item, collegesList) ;
+
+        System.out.println("porque");
+
+        collegesListView.setAdapter(collegesListAdapter) ;
     }
 
     public void viewCollegeDetails(View view) {
 
         // TODO: Implement the view college details using an Intent
+
+        College selectedCollege = (College) view.getTag() ;
+
+        Intent intent = new Intent(this, CollegeDetailsActivity.class) ;
+
+        intent.putExtra("ImageName", selectedCollege.getImageName()) ;
+        intent.putExtra("Name", selectedCollege.getName()) ;
+
+        intent.putExtra("Population", selectedCollege.getPopulation()) ;
+        intent.putExtra("Tuition", selectedCollege.getTuition()) ;
+
+        intent.putExtra("Rating", selectedCollege.getRating()) ;
+
+        startActivity(intent) ;
+
     }
 
     public void addCollege(View view) {

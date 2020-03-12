@@ -1,4 +1,4 @@
-package edu.orangecoastcollege.cs273.wheretonext;
+package edu.miracostacollege.cs134.wheretonext;
 
 import android.content.Intent;
 import android.content.res.AssetManager;
