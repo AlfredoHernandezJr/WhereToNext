@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.RatingBar;
+import android.widget.TextView;
 
 import java.io.IOException;
 import java.util.List;
@@ -19,16 +21,26 @@ public class MainActivity extends AppCompatActivity {
     private CollegeListAdapter collegesListAdapter;
     private ListView collegesListView;
 
+    private TextView nameEditText ;
+    private TextView populationEditText ;
+    private TextView tuitionEditText ;
+    private RatingBar collegeRatingBar ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        nameEditText = findViewById(R.id.nameEditText) ;
+        populationEditText = findViewById(R.id.populationEditText) ;
+        tuitionEditText = findViewById(R.id.tuitionEditText) ;
+        collegeRatingBar = findViewById(R.id.collegeRatingBar) ;
+
         //this.deleteDatabase(DBHelper.DATABASE_NAME);
         //db = new DBHelper(this);
 
-        // TODO: Comment this section out once the colleges below have been added to the database,
-        // TODO: so they are not added multiple times (prevent duplicate entries)
+        // Done: Comment this section out once the colleges below have been added to the database,
+        // Done: so they are not added multiple times (prevent duplicate entries)
         /*
         db.addCollege(new College("UC Berkeley", 42082, 14068, 4.7, "ucb.png"));
         db.addCollege(new College("UC Irvine", 31551, 15026.47, 4.3, "uci.png"));
@@ -37,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         db.addCollege(new College("CSU Fullerton", 38948, 6437, 4.5, "csuf.png"));
         db.addCollege(new College("CSU Long Beach", 37430, 6452, 4.4, "csulb.png"));
         */
-        // TODO:  Fill the collegesList with all Colleges from the database
+        // Done:  Fill the collegesList with all Colleges from the database
         try
         {
             collegesList = JSONLoader.loadJSONFromAsset(this) ;
@@ -46,21 +58,18 @@ public class MainActivity extends AppCompatActivity {
             Log.e("Colleges", e.getMessage()) ;
         }
 
-        // TODO:  Connect the list adapter with the list
+        // Done:  Connect the list adapter with the list
         collegesListView = findViewById(R.id.collegeListView) ;
 
-        // TODO:  Set the list view to use the list adapter
-        System.out.println("porque");
+        // Done:  Set the list view to use the list adapter
         collegesListAdapter = new CollegeListAdapter(this, R.layout.college_list_item, collegesList) ;
-
-        System.out.println("porque");
 
         collegesListView.setAdapter(collegesListAdapter) ;
     }
 
     public void viewCollegeDetails(View view) {
 
-        // TODO: Implement the view college details using an Intent
+        // Done: Implement the view college details using an Intent
 
         College selectedCollege = (College) view.getTag() ;
 
@@ -72,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("Population", selectedCollege.getPopulation()) ;
         intent.putExtra("Tuition", selectedCollege.getTuition()) ;
 
-        intent.putExtra("Rating", selectedCollege.getRating()) ;
+        intent.putExtra("Rating", (float) selectedCollege.getRating()) ;
 
         startActivity(intent) ;
 
@@ -80,7 +89,30 @@ public class MainActivity extends AppCompatActivity {
 
     public void addCollege(View view) {
 
-        // TODO: Implement the code for when the user clicks on the addCollegeButton
+        // Done: Implement the code for when the user clicks on the addCollegeButton
+        String collegeName = nameEditText.getText().toString() ;
+        int collegePopulation = Integer.parseInt(populationEditText.getText().toString()) ;
+        double collegeTuition = Double.parseDouble(tuitionEditText.getText().toString()) ;
+        float collegeRating = collegeRatingBar.getRating() ;
+        String imageName = "college.png" ;
+
+        College newCollege = new College(collegeName, collegePopulation,
+                                        collegeTuition, collegeRating) ;
+
+        newCollege.setImageName(imageName);
+
+        collegesList.add(newCollege) ;
+
+        collegesListAdapter.notifyDataSetChanged();
+
+        clearParameters();
     }
 
+    private void clearParameters()
+    {
+        nameEditText.setText("") ;
+        populationEditText.setText("") ;
+        tuitionEditText.setText("") ;
+        collegeRatingBar.setRating(0.0f) ;
+    }
 }

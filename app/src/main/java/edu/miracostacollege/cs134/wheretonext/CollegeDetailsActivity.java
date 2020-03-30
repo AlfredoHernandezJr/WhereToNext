@@ -31,7 +31,7 @@ public class CollegeDetailsActivity extends AppCompatActivity {
         Intent detailsIntent = getIntent();
         String name = detailsIntent.getStringExtra("Name");
         int population = detailsIntent.getIntExtra("Population", 0);
-        float tuition = detailsIntent.getFloatExtra("Tuition", 0.0f);
+        double tuition = detailsIntent.getDoubleExtra("Tuition", 0.0);
         float rating = detailsIntent.getFloatExtra("Rating", 0.0f);
         String imageName = detailsIntent.getStringExtra("ImageName");
 

@@ -56,7 +56,7 @@ public class CollegeListAdapter extends ArrayAdapter<College> {
     @Override
     public View getView(int pos, View convertView, ViewGroup parent)
     {
-        // TODO:  Write the code to correctly inflate the view (college_list_item) with
+        // Done:  Write the code to correctly inflate the view (college_list_item) with
         LayoutInflater inflater =
                 (LayoutInflater) mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(mResourceId, null);
@@ -65,7 +65,7 @@ public class CollegeListAdapter extends ArrayAdapter<College> {
 
         LinearLayout collegeLinearLayout = view.findViewById(R.id.collegeListLinearLayout) ;
 
-        // TODO:  all widgets filled with the appropriate College information.
+        // Done:  all widgets filled with the appropriate College information.
         TextView collegeNameListTextView = view.findViewById(R.id.collegeListNameTextView) ;
         collegeNameListTextView.setText(selectedCollege.getName()) ;
 
